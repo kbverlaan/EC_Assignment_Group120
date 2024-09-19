@@ -32,7 +32,7 @@ def eval_genomes(genomes, config):
         )
 
         # Evaluate the genome
-        fitness, _, _, _ = env.play(genome=genome, config=config)  # Pass genome and config to player controller
+        fitness, _, _, _ = env.play(pcont=genome)  # Pass genome and config to player controller
         genome.fitness = fitness  # Assign the fitness score to the genome
 
 # Load configuration for NEAT
