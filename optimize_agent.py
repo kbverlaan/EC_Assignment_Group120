@@ -19,7 +19,6 @@ experiment_name = 'test'
 if not os.path.exists(f'results_{experiment_name}'):
     os.makedirs(f'results_{experiment_name}')
 
-
 #Parameters
 n_hidden_neurons = 10 #<-- switch out later
 run_mode = 'train' # train or test
@@ -86,6 +85,7 @@ for i in range(ini_g+1, gens):
     # Select survivors
     pop, fit_pop = genetic_operators.survivor_selection(pop, fit_pop, best)
 
+
     # Doomsday event when theres no improvement in 15 generations
     if best_sol <= last_sol:
         notimproved += 1
@@ -97,6 +97,7 @@ for i in range(ini_g+1, gens):
         pop, fit_pop = genetic_operators.doomsday(pop,fit_pop)
         print(' Doomsday Event')
         notimproved = 0
+
 
     # Print message
     best = np.argmax(fit_pop)
