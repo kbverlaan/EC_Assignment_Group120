@@ -5,7 +5,7 @@ import sys
 
 from evoman.environment import Environment
 from player_controller import player_controller
-from genetic_operators import GeneticOperators
+from Old.genetic_operators import GeneticOperators
 
 # imports other libs
 import time

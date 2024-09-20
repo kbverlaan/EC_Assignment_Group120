@@ -1,12 +1,12 @@
 [NEAT]
 fitness_criterion     = max
-fitness_threshold     = 1000.0
-pop_size              = 150
-reset_on_extinction   = False
+fitness_threshold     = 100
+pop_size              = 50
+reset_on_extinction   = True
 
 [DefaultGenome]
 activation_default      = sigmoid
-activation_mutate_rate  = 0.1
+activation_mutate_rate  = 0.2
 activation_options      = sigmoid
 
 aggregation_default     = sum
@@ -16,15 +16,15 @@ aggregation_options     = sum
 # Number of input, output, and hidden nodes
 num_inputs              = 20
 num_outputs             = 5
-num_hidden              = 0
-initial_connection      = full
-feed_forward            = True  
+num_hidden              = 4
+feed_forward            = false  
+initial_connection      = partial_nodirect 0.4
 
 # Node bias options
 bias_init_mean          = 0.0
 bias_init_stdev         = 1.0
-bias_max_value          = 30.0
-bias_min_value          = -30.0
+bias_max_value          = 5.0
+bias_min_value          = -5.0
 bias_mutate_power       = 0.5
 bias_mutate_rate        = 0.7
 bias_replace_rate       = 0.1
@@ -32,11 +32,11 @@ bias_replace_rate       = 0.1
 # Response options
 response_init_mean      = 1.0
 response_init_stdev     = 0.0
-response_max_value      = 30.0
-response_min_value      = -30.0
-response_mutate_power   = 0.0
-response_mutate_rate    = 0.0
-response_replace_rate   = 0.0
+response_max_value      = 5.0
+response_min_value      = -5.0
+response_mutate_power   = 0.2
+response_mutate_rate    = 0.2
+response_replace_rate   = 0.2
 
 # Genome compatibility options
 compatibility_disjoint_coefficient = 1.0
@@ -44,33 +44,33 @@ compatibility_weight_coefficient   = 0.5
 
 # Connection options
 enabled_default         = True 
-enabled_mutate_rate     = 0.01   
+enabled_mutate_rate     = 0.3
 
 # Connection weight options
 weight_init_mean        = 0.0
 weight_init_stdev       = 1.0
-weight_max_value        = 30.0
-weight_min_value        = -30.0
+weight_max_value        = 5.0
+weight_min_value        = -5.0
 weight_mutate_power     = 0.5
 weight_mutate_rate      = 0.8
 weight_replace_rate     = 0.1
 
 # Genome node options
-node_add_prob           = 0.03
-node_delete_prob        = 0.01
+node_add_prob           = 0.4
+node_delete_prob        = 0.1
 
 # Genome connection options
-conn_add_prob           = 0.05
-conn_delete_prob        = 0.01
+conn_add_prob           = 0.5
+conn_delete_prob        = 0.6
 
 [DefaultReproduction]
-elitism                = 2
+elitism                = 5
 survival_threshold     = 0.2
 
 [DefaultSpeciesSet]
-compatibility_threshold = 3.0
+compatibility_threshold = 2.0
 
 [DefaultStagnation]
 species_fitness_func    = max
-max_stagnation          = 15
-species_elitism         = 2
+max_stagnation          = 25
+species_elitism         = 1

@@ -18,7 +18,6 @@ class GeneticOperators:
         f,p,e,t = self.env.play(pcont=x)
         return f
 
-
     #main operators
     def evaluate(self, x):
         return np.array(list(map(lambda y: self.simulation(y), x)))

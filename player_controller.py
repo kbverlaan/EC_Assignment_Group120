@@ -6,17 +6,19 @@ import numpy as np
 import neat
 
 class player_controller(Controller):
-	def control(self, inputs, genome):
+	def __init__(self):		
 		config_path = "config"  # Create a configuration file (described below)
-		config = neat.config.Config(
+		self.config = neat.config.Config(
 			neat.DefaultGenome,
 			neat.DefaultReproduction,
 			neat.DefaultSpeciesSet,
 			neat.DefaultStagnation,
 			config_path
 		)
+		
+	def control(self, inputs, genome):
 		# Init NN
-		net = neat.nn.FeedForwardNetwork.create(genome, config)
+		net = neat.nn.FeedForwardNetwork.create(genome, self.config)
 
 		# Normalize inputs
 		inputs = (inputs - min(inputs) / float(max(inputs) - min(inputs)))
