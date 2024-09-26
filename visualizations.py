@@ -93,3 +93,113 @@ def save_genome_plot(genome, config, filename='genome_plot', node_names=None, sh
 
     # Draw the network using the draw_net function and save it to the specified file
     draw_net(config, genome, view=False, filename=filename, node_names=node_names, show_disabled=show_disabled, prune_unused=prune_unused, fmt=fmt)
+
+# visualizations.py
+
+import matplotlib.pyplot as plt
+import os
+import pandas as pd
+import numpy as np
+
+def plot_runs(experiment_name, enemy, runs, generations):
+    # Lists to store data from all runs
+    all_max_fitnesses = []
+    all_mean_fitnesses = []
+    generations_list = None
+
+    for run_index in range(runs):
+        data_filename = os.path.join('results', experiment_name, f'fitness_data_Enemy{enemy}_Run{run_index}.csv')
+
+        # Read the fitness data CSV file
+        if os.path.exists(data_filename):
+            df = pd.read_csv(data_filename)
+            all_max_fitnesses.append(df['max_fitness'].values)
+            all_mean_fitnesses.append(df['mean_fitness'].values)
+            if generations_list is None:
+                generations_list = df['generation'].values
+        else:
+            print(f'Fitness data file not found for run {run_index}')
+            continue
+
+    # Now plot all runs in a single plot
+    plt.figure(figsize=(10, 6))
+
+    # Plot best fitness lines for each run
+    for idx, max_fitnesses in enumerate(all_max_fitnesses):
+        plt.plot(generations_list, max_fitnesses, linestyle='-', color='blue', alpha=0.5)
+
+    # Plot mean fitness lines for each run
+    for idx, mean_fitnesses in enumerate(all_mean_fitnesses):
+        plt.plot(generations_list, mean_fitnesses, linestyle='--', color='orange', alpha=0.5)
+
+    # Add labels for best and mean fitness
+    plt.plot([], [], linestyle='-', color='blue', label='Best Fitness per Run')
+    plt.plot([], [], linestyle='--', color='orange', label='Mean Fitness per Run')
+
+    plt.xlabel('Generation')
+    plt.ylabel('Fitness')
+    plt.title(f'Fitness over Generations for Enemy {enemy}')
+    plt.legend(loc='lower right')
+    plt.grid(True)
+
+    # Save the plot
+    output_dir = os.path.join('results', experiment_name)
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+    plt.savefig(os.path.join(output_dir, f'fitness_over_generations_enemy_{enemy}.png'))
+    plt.close()
+
+def aggregate_plots(experiment_name, enemy, runs, generations):
+    # Lists to store data from all runs
+    all_max_fitnesses = []
+    all_mean_fitnesses = []
+    generations_list = None
+
+    for run_index in range(runs):
+        data_filename = os.path.join('results', experiment_name, f'fitness_data_Enemy{enemy}_Run{run_index}.csv')
+
+        # Read the fitness data CSV file
+        if os.path.exists(data_filename):
+            df = pd.read_csv(data_filename)
+            all_max_fitnesses.append(df['max_fitness'].values)
+            all_mean_fitnesses.append(df['mean_fitness'].values)
+            if generations_list is None:
+                generations_list = df['generation'].values
+        else:
+            print(f'Fitness data file not found for run {run_index}')
+            continue
+
+    # Convert lists to numpy arrays
+    all_max_fitnesses = np.array(all_max_fitnesses)
+    all_mean_fitnesses = np.array(all_mean_fitnesses)
+
+    # Compute mean and std deviation across runs
+    mean_max_fitnesses = np.mean(all_max_fitnesses, axis=0)
+    std_max_fitnesses = np.std(all_max_fitnesses, axis=0)
+
+    mean_mean_fitnesses = np.mean(all_mean_fitnesses, axis=0)
+    std_mean_fitnesses = np.std(all_mean_fitnesses, axis=0)
+
+    # Plot the aggregated data
+    plt.figure(figsize=(10, 6))
+
+    # Plot mean of best fitness with std deviation
+    plt.plot(generations_list, mean_max_fitnesses, label='Mean Best Fitness', linestyle='-', color='blue')
+    plt.fill_between(generations_list, mean_max_fitnesses - std_max_fitnesses, mean_max_fitnesses + std_max_fitnesses, color='blue', alpha=0.2)
+
+    # Plot mean of mean fitness with std deviation
+    plt.plot(generations_list, mean_mean_fitnesses, label='Mean of Mean Fitness', linestyle='--', color='orange')
+    plt.fill_between(generations_list, mean_mean_fitnesses - std_mean_fitnesses, mean_mean_fitnesses + std_mean_fitnesses, color='orange', alpha=0.2)
+
+    plt.xlabel('Generation')
+    plt.ylabel('Fitness')
+    plt.title(f'Aggregated Fitness over Generations for Enemy {enemy}')
+    plt.legend(loc='lower right')
+    plt.grid(True)
+
+    # Save the plot
+    output_dir = os.path.join('results', experiment_name)
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+    plt.savefig(os.path.join(output_dir, f'aggregated_fitness_enemy_{enemy}.png'))
+    plt.close()
