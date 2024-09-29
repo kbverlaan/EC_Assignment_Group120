@@ -1,6 +1,9 @@
 import warnings
 import graphviz
 import os
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
 
 def draw_net(config, genome, view=False, filename=None, node_names=None, show_disabled=True, prune_unused=False,
              node_colors=None, fmt='svg'):
@@ -131,7 +134,7 @@ def plot_runs(experiment_name, enemy, runs, generations):
 
     plt.xlabel('Generation')
     plt.ylabel('Fitness')
-    plt.title(f'Fitness over Generations for Enemy {enemy}')
+    #plt.title(f'Fitness over Generations for Enemy {enemy} with Compatibility Threshold = 3.0')
     plt.legend(loc='lower right')
     plt.grid(True)
 
@@ -173,6 +176,12 @@ def aggregate_plots(experiment_name, enemy, runs, generations):
     mean_mean_fitnesses = np.mean(all_mean_fitnesses, axis=0)
     std_mean_fitnesses = np.std(all_mean_fitnesses, axis=0)
 
+    print(f'Enemy {enemy}')
+    print(mean_max_fitnesses[-1])
+    print(std_max_fitnesses[-1])
+    print(max([item for sublist in all_max_fitnesses for item in sublist]))
+    
+
     # Plot the aggregated data
     plt.figure(figsize=(10, 6))
 
@@ -186,7 +195,7 @@ def aggregate_plots(experiment_name, enemy, runs, generations):
 
     plt.xlabel('Generation')
     plt.ylabel('Fitness')
-    plt.title(f'Aggregated Fitness over Generations for Enemy {enemy}')
+    #plt.title(f'Aggregated Fitness over Generations for Enemy {enemy} with Compatibility Threshold = 3.0')
     plt.legend(loc='lower right')
     plt.grid(True)
 
