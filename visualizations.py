@@ -94,13 +94,6 @@ def save_genome_plot(genome, config, filename='genome_plot', node_names=None, sh
     # Draw the network using the draw_net function and save it to the specified file
     draw_net(config, genome, view=False, filename=filename, node_names=node_names, show_disabled=show_disabled, prune_unused=prune_unused, fmt=fmt)
 
-# visualizations.py
-
-import matplotlib.pyplot as plt
-import os
-import pandas as pd
-import numpy as np
-
 def plot_runs(experiment_name, enemy, runs, generations):
     # Lists to store data from all runs
     all_max_fitnesses = []

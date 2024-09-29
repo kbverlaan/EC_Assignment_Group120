@@ -48,11 +48,11 @@ class FitnessLogger:
 
 # Number of runs
 runs = 10
-generations = 100
+generations = 50
 
-for enemy in [2]: 
+for enemy in [2, 5, 7]: 
     for run_index in range(runs):    
-        experiment_name = f'test'
+        experiment_name = f'CT2.0'
         run_name = f'Enemy{enemy}_Run{run_index}'
 
         # Create the environment for each genome
